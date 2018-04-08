@@ -10,7 +10,6 @@ import org.marc4j.marc.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.FluxSink;
 import reactor.core.scheduler.Schedulers;
 
 import java.io.ByteArrayInputStream;
