@@ -1,3 +1,5 @@
 com/bheaver/ngl4/importCatalog/ImportCatalogRecords.class
-com/bheaver/ngl4/importCatalog/factory/ImportCatalogFactory.class
+com/bheaver/ngl4/importCatalog/impl/RecordIterable$1.class
 com/bheaver/ngl4/importCatalog/impl/ImportMARCRecords.class
+com/bheaver/ngl4/importCatalog/factory/ImportCatalogFactory.class
+com/bheaver/ngl4/importCatalog/impl/RecordIterable.class
