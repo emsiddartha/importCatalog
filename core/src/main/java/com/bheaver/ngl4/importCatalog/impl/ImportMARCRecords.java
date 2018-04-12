@@ -11,14 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import reactor.core.CoreSubscriber;
-import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Schedulers;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class ImportMARCRecords implements ImportCatalogRecords{
     Logger logger = LoggerFactory.getLogger(ImportMARCRecords.class);
@@ -32,8 +33,11 @@ public class ImportMARCRecords implements ImportCatalogRecords{
     }
 
     @Override
-    public Flux<MarcRecord> parseRecords(String rawData) {
-        return Flux.fromIterable(getMarcRecords(rawData)).subscribeOn(Schedulers.parallel());
+    public CompletableFuture<List<MarcRecord>> parseRecords(String rawData) {
+        return CompletableFuture.supplyAsync(() ->
+             StreamSupport.stream(getMarcRecords(rawData).spliterator(),true)
+                    .collect(Collectors.toList())
+        );
 
     }
     private Iterable<MarcRecord> getMarcRecords(String rawData){
