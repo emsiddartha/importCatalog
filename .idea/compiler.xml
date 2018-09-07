@@ -13,10 +13,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="core" target="1.9" />
-      <module name="importCatalog" target="1.9" />
-      <module name="protocol" target="1.9" />
-      <module name="utility" target="1.9" />
+      <module name="core" target="1.8" />
+      <module name="importCatalog" target="1.8" />
+      <module name="protocol" target="1.8" />
+      <module name="utility" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

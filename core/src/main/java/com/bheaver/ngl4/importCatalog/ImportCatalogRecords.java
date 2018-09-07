@@ -2,12 +2,13 @@ package com.bheaver.ngl4.importCatalog;
 
 
 import com.bheaver.ngl4.importCatalog.model.MarcRecord;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public interface ImportCatalogRecords {
     public String sayHello(String record);
 
-    public CompletableFuture<List<MarcRecord>> parseRecords(String rawData);
+    public Flux<MarcRecord> parseRecords(Mono<String> rawData);
 }

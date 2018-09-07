@@ -4,6 +4,7 @@ import com.bheaver.ngl4.importCatalog.ImportCatalogRecords;
 import com.bheaver.ngl4.importCatalog.model.BeanNames;
 import com.bheaver.ngl4.importCatalog.model.MarcRecord;
 import com.bheaver.ngl4.importCatalog.util.Transformer;
+import com.google.common.collect.Lists;
 import org.marc4j.MarcReader;
 import org.marc4j.MarcStreamReader;
 import org.marc4j.marc.Record;
@@ -11,10 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -33,11 +37,11 @@ public class ImportMARCRecords implements ImportCatalogRecords{
     }
 
     @Override
-    public CompletableFuture<List<MarcRecord>> parseRecords(String rawData) {
-        return CompletableFuture.supplyAsync(() ->
-             StreamSupport.stream(getMarcRecords(rawData).spliterator(),true)
-                    .collect(Collectors.toList())
-        );
+    public Flux<MarcRecord> parseRecords(Mono<String> rawData) {
+        return rawData.flatMapMany(s -> {
+            Flux<MarcRecord> marcRecordFlux = Flux.fromStream(Lists.newArrayList(getMarcRecords(s).iterator()).stream());
+            return marcRecordFlux;
+        });
 
     }
     private Iterable<MarcRecord> getMarcRecords(String rawData){
